@@ -1,7 +1,17 @@
 /* eslint-disable react/prop-types */
 import { formateDate } from "../../utils/formateDate";
+import { useCallback, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Appointments = ({ appointments }) => {
+  console.log("Raju", "appointments: " + JSON.stringify(appointments[0]))
+
+  const navigate = useNavigate()
+
+  const handleJoin = useCallback(({ doctorId }) => {
+    navigate(`/room/${doctorId}`);
+  }, [navigate]);
+
   return (
     <table className="w-full text-left text-sm text-gray-500">
       <thead className="text-xs text-gary-700 uppercase bg-gray-50">
@@ -20,6 +30,9 @@ const Appointments = ({ appointments }) => {
           </th>
           <th scope="col" className="px-6 py-3">
             Booked On
+          </th>
+          <th scope="col" className="px-6 py-3">
+            Call
           </th>
         </tr>
       </thead>
@@ -54,12 +67,17 @@ const Appointments = ({ appointments }) => {
               {!item.isPaid && (
                 <div className="flex items-center">
                   <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
-                 Unpaid
+                  Unpaid
                 </div>
               )}
             </td>
-            <td className="px-6 py-4">{item.user.ticketPrice}</td>
+            <td className="px-6 py-4">{item.ticketPrice}</td>
             <td className="px-6 py-4">{formateDate(item.createdAt)}</td>
+            <td className="px-6 py-4">
+              <button onClick={() => handleJoin({ doctorId: item.doctor._id })}>
+                Call
+              </button>
+            </td>
           </tr>
         ))}
       </tbody>
