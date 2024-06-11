@@ -99,65 +99,65 @@ export const getUserProfile = async (req, res) => {
   }
 };
 
-// export const getMyAppointments = async (req, res) => {
-//   try {
-//     //step1 : retrive appointments from booking
-//     const bookings = await Booking.find({ user: req.userId });
-//
-//     //step2: extract doctor ids from the appointment booking
-//     const doctorIds = bookings.map((el) => el.doctor.id);
-//
-//     //step3: retrieve doctors using doctor ids
-//     const doctors = await Doctor.find({ _id: { $in: doctorIds } }).select(
-//       "-password"
-//     );
-//
-//     res
-//       .status(200)
-//       .json({
-//         success: true,
-//         message: "Appointments are getting",
-//         data: doctors,
-//       });
-//   } catch (err) {
-//     res
-//       .status(500)
-//       .json({ success: false, message: "Something went wrong, cannot get" });
-//   }
-// };
-
 export const getMyAppointments = async (req, res) => {
   try {
-    // Step 1: Retrieve appointments from booking
+    //step1 : retrive appointments from booking
     const bookings = await Booking.find({ user: req.userId });
 
-    // Step 2: Extract doctor ids from the appointment booking
+    //step2: extract doctor ids from the appointment booking
     const doctorIds = bookings.map((el) => el.doctor.id);
 
-    // Step 3: Retrieve doctors using doctor ids
+    //step3: retrieve doctors using doctor ids
     const doctors = await Doctor.find({ _id: { $in: doctorIds } }).select(
       "-password"
     );
 
-    // Step 4: Combine booking details with doctor details
-    const appointments = bookings.map(booking => {
-      const doctor = doctors.find(doc => doc._id.toString() === booking.doctor.id);
-      return {
-        booking,
-        doctor
-      };
-    });
-
-    console.log(appointments)
-    res.status(200).json({
-      success: true,
-      message: "Appointments are getting",
-      data: appointments,
-    });
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Appointments are getting",
+        data: doctors,
+      });
   } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong, cannot get",
-    });
+    res
+      .status(500)
+      .json({ success: false, message: "Something went wrong, cannot get" });
   }
 };
+
+// export const getMyAppointments = async (req, res) => {
+//   try {
+//     // Step 1: Retrieve appointments from booking
+//     const bookings = await Booking.find({ user: req.userId });
+// 
+//     // Step 2: Extract doctor ids from the appointment booking
+//     const doctorIds = bookings.map((el) => el.doctor.id);
+// 
+//     // Step 3: Retrieve doctors using doctor ids
+//     const doctors = await Doctor.find({ _id: { $in: doctorIds } }).select(
+//       "-password"
+//     );
+// 
+//     // Step 4: Combine booking details with doctor details
+//     const appointments = bookings.map(booking => {
+//       const doctor = doctors.find(doc => doc._id.toString() === booking.doctor.id);
+//       return {
+//         booking,
+//         doctor
+//       };
+//     });
+// 
+//     console.log(appointments)
+//     res.status(200).json({
+//       success: true,
+//       message: "Appointments are getting",
+//       data: appointments,
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       success: false,
+//       message: "Something went wrong, cannot get",
+//     });
+//   }
+// };

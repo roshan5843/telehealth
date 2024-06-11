@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 const DoctorSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
@@ -24,7 +24,7 @@ const DoctorSchema = new mongoose.Schema({
   bio: { type: String, maxLength: 50 },
   about: { type: String },
   timeSlots: { type: Array },
-  reviews: [{ type: mongoose.Types.ObjectId, ref: "Review" }],
+  reviews: [{ type: mongoose.Types.ObjectId, ref: 'Review' }],
   averageRating: {
     type: Number,
     default: 0,
@@ -35,10 +35,10 @@ const DoctorSchema = new mongoose.Schema({
   },
   isApproved: {
     type: String,
-    enum: ["pending", "approved", "cancelled"],
-    default: "pending",
+    enum: ['pending', 'approved', 'cancelled'],
+    default: 'pending',
   },
-  appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
-});
+  appointments: [{ type: mongoose.Types.ObjectId, ref: 'Appointment' }],
+})
 
-export default mongoose.model("Doctor", DoctorSchema);
+export default mongoose.model('Doctor', DoctorSchema)

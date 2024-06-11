@@ -11,6 +11,9 @@ const initialState = {
 };
 
 export const authContext = createContext(initialState);
+// const AuthContext = createContext();
+
+export const useAuth = () => useContext(authContext);
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -39,6 +42,7 @@ const authReducer = (state, action) => {
       return state;
   }
 };
+
 
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
